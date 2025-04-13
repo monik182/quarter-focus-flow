@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 252 45% 98%;
+    --background: 220 30% 96%;
     --foreground: 255 20% 20%;
 
     --card: 0 0% 100%;
@@ -92,6 +92,7 @@
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
   }
 }
 
@@ -99,4 +100,47 @@
   .hover-scale {
     @apply transition-transform duration-200 hover:scale-105;
   }
+  
+  .neu-card {
+    @apply bg-white rounded-3xl shadow-[20px_20px_60px_#d9d9d9,_-20px_-20px_60px_#ffffff] p-8;
+  }
+  
+  .neu-button {
+    @apply bg-white rounded-full shadow-[5px_5px_10px_#d9d9d9,_-5px_-5px_10px_#ffffff] 
+           hover:shadow-[inset_5px_5px_10px_#d9d9d9,_inset_-5px_-5px_10px_#ffffff]
+           transition-all duration-300;
+  }
+  
+  .neu-button-primary {
+    @apply bg-gradient-to-r from-purple-300 to-indigo-400 text-white
+           rounded-full shadow-lg hover:shadow-xl
+           transition-all duration-300;
+  }
+  
+  .neu-input {
+    @apply bg-gray-50 rounded-full shadow-[inset_5px_5px_10px_#d9d9d9,_inset_-5px_-5px_10px_#ffffff]
+           focus:shadow-[inset_5px_5px_15px_#d9d9d9,_inset_-5px_-5px_15px_#ffffff]
+           border-none transition-all duration-300;
+  }
+  
+  .soft-gradient {
+    @apply bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50;
+  }
+  
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-400;
+  }
+}
+
+/* Remove App.css default styles */
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
 }
