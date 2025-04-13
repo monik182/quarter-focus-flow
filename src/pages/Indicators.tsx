@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Layout } from "@/components/Layout";
 import { usePlan } from "@/context/PlanContext";
 import { NeumorphicCard } from "@/components/ui/neumorphic-card";
@@ -7,6 +7,7 @@ import { IndicatorTrends } from "@/components/IndicatorTrends";
 import { Button } from "@/components/ui/button";
 import { ChartPie, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { SubscriptionGuard } from "@/components/SubscriptionGuard";
 
 const Indicators = () => {
   const { currentPlan, isLoading } = usePlan();
@@ -62,9 +63,15 @@ const Indicators = () => {
         </h1>
       </div>
       
-      <NeumorphicCard>
-        <IndicatorTrends />
-      </NeumorphicCard>
+      <SubscriptionGuard 
+        feature="progress-view"
+        title="Premium Feature: Indicator Trends"
+        description="Unlock detailed progress tracking and visualization of your indicators with a premium subscription."
+      >
+        <NeumorphicCard>
+          <IndicatorTrends />
+        </NeumorphicCard>
+      </SubscriptionGuard>
     </Layout>
   );
 };

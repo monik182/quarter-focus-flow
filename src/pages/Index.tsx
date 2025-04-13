@@ -5,13 +5,15 @@ import { PlanOverview } from "@/components/PlanOverview";
 import { CreatePlanForm } from "@/components/CreatePlanForm";
 import { WeeklyProgress } from "@/components/WeeklyProgress";
 import { usePlan } from "@/context/PlanContext";
+import { useSubscription } from "@/context/SubscriptionContext";
 import { NeumorphicCard } from "@/components/ui/neumorphic-card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ChartPie, FileText, Lightbulb } from "lucide-react";
+import { ChartPie, FileText, Lightbulb, Crown } from "lucide-react";
 
 const Index = () => {
   const { currentPlan, isLoading } = usePlan();
+  const { tier, hasActiveSubscription } = useSubscription();
 
   if (isLoading) {
     return (
@@ -44,6 +46,25 @@ const Index = () => {
         </div>
       ) : (
         <div className="space-y-8">
+          {!hasActiveSubscription && (
+            <NeumorphicCard className="bg-gradient-to-r from-purple-50 to-blue-50 p-6">
+              <div className="flex flex-col md:flex-row items-center gap-4">
+                <div className="md:flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Crown className="h-5 w-5 text-primary" />
+                    <h3 className="text-lg font-bold">Unlock Premium Features</h3>
+                  </div>
+                  <p className="text-muted-foreground mb-4">
+                    Upgrade to access progress tracking, goal templates, AI suggestions, and more!
+                  </p>
+                </div>
+                <Button asChild>
+                  <Link to="/pricing">View Pricing</Link>
+                </Button>
+              </div>
+            </NeumorphicCard>
+          )}
+          
           <NeumorphicCard>
             <PlanOverview />
           </NeumorphicCard>
@@ -62,6 +83,11 @@ const Index = () => {
               <Button asChild className="mt-auto">
                 <Link to="/indicators">View Indicators</Link>
               </Button>
+              {!hasActiveSubscription && (
+                <div className="text-xs text-primary mt-2 flex items-center gap-1">
+                  <Crown className="h-3 w-3" /> Premium Feature
+                </div>
+              )}
             </NeumorphicCard>
             
             <NeumorphicCard className="flex flex-col items-center text-center p-6">
@@ -73,6 +99,11 @@ const Index = () => {
               <Button asChild className="mt-auto">
                 <Link to="/templates">Browse Templates</Link>
               </Button>
+              {!hasActiveSubscription && (
+                <div className="text-xs text-primary mt-2 flex items-center gap-1">
+                  <Crown className="h-3 w-3" /> Premium Feature
+                </div>
+              )}
             </NeumorphicCard>
             
             <NeumorphicCard className="flex flex-col items-center text-center p-6">
@@ -84,8 +115,27 @@ const Index = () => {
               <Button asChild className="mt-auto">
                 <Link to="/suggestions">Get Suggestions</Link>
               </Button>
+              {!hasActiveSubscription && (
+                <div className="text-xs text-primary mt-2 flex items-center gap-1">
+                  <Crown className="h-3 w-3" /> Premium Feature
+                </div>
+              )}
             </NeumorphicCard>
           </div>
+          
+          {/* Subscription Upsell for Free Tier */}
+          {!hasActiveSubscription && (
+            <NeumorphicCard className="text-center p-8 bg-gradient-to-r from-blue-50 to-purple-50">
+              <Crown className="h-16 w-16 mx-auto mb-4 text-primary" />
+              <h2 className="text-2xl font-bold mb-2">Ready to unlock the full experience?</h2>
+              <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+                Get unlimited plans, progress tracking, goal templates, and AI-powered suggestions with QuarterFocus Premium.
+              </p>
+              <Button asChild size="lg">
+                <Link to="/pricing">Upgrade Now</Link>
+              </Button>
+            </NeumorphicCard>
+          )}
         </div>
       )}
     </Layout>

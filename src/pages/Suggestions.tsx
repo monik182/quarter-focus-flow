@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Layout } from "@/components/Layout";
 import { usePlan } from "@/context/PlanContext";
 import { NeumorphicCard } from "@/components/ui/neumorphic-card";
@@ -7,6 +7,7 @@ import { AISuggestions } from "@/components/AISuggestions";
 import { Button } from "@/components/ui/button";
 import { Lightbulb, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { SubscriptionGuard } from "@/components/SubscriptionGuard";
 
 const Suggestions = () => {
   const { currentPlan, isLoading } = usePlan();
@@ -62,9 +63,15 @@ const Suggestions = () => {
         </h1>
       </div>
       
-      <NeumorphicCard>
-        <AISuggestions />
-      </NeumorphicCard>
+      <SubscriptionGuard 
+        feature="ai-suggestions"
+        title="Premium Feature: AI Suggestions"
+        description="Get intelligent goal and strategy recommendations powered by AI with a premium subscription."
+      >
+        <NeumorphicCard>
+          <AISuggestions />
+        </NeumorphicCard>
+      </SubscriptionGuard>
     </Layout>
   );
 };

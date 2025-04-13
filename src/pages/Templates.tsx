@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Layout } from "@/components/Layout";
 import { usePlan } from "@/context/PlanContext";
 import { NeumorphicCard } from "@/components/ui/neumorphic-card";
@@ -7,6 +7,7 @@ import { TemplateGallery } from "@/components/TemplateGallery";
 import { Button } from "@/components/ui/button";
 import { FileText, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { SubscriptionGuard } from "@/components/SubscriptionGuard";
 
 const Templates = () => {
   const { currentPlan } = usePlan();
@@ -29,9 +30,15 @@ const Templates = () => {
         </h1>
       </div>
       
-      <NeumorphicCard>
-        <TemplateGallery />
-      </NeumorphicCard>
+      <SubscriptionGuard 
+        feature="templates"
+        title="Premium Feature: Goal Templates"
+        description="Access a library of pre-built goal templates to jumpstart your planning process with a premium subscription."
+      >
+        <NeumorphicCard>
+          <TemplateGallery />
+        </NeumorphicCard>
+      </SubscriptionGuard>
     </Layout>
   );
 };
