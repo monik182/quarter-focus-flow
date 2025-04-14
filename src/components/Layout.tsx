@@ -1,6 +1,9 @@
 
 import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
+import { LogIn, UserPlus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,7 +24,16 @@ export function Layout({ children }: LayoutProps) {
               <h1 className="text-2xl font-bold gradient-text">QuarterFocus</h1>
             </div>
             <div className="ml-auto flex items-center gap-4">
-              {/* Additional header elements could go here */}
+              <Button variant="outline" asChild>
+                <Link to="/login">
+                  <LogIn className="mr-2 h-4 w-4" /> Login
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link to="/signup">
+                  <UserPlus className="mr-2 h-4 w-4" /> Sign Up
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
