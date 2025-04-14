@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Layout } from "@/components/Layout";
 import { PlanOverview } from "@/components/PlanOverview";
@@ -7,7 +8,7 @@ import { useSubscription } from "@/context/SubscriptionContext";
 import { NeumorphicCard } from "@/components/ui/neumorphic-card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Crown } from "lucide-react";
+import { Crown, ChartPie, FileText, Lightbulb } from "lucide-react";
 import { LandingHero } from "@/components/landing/LandingHero";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { Features } from "@/components/landing/Features";
