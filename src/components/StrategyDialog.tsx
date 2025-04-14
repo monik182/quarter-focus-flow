@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -48,6 +47,14 @@ export function StrategyDialog({ goalId, open, onOpenChange, strategy }: Strateg
     setSelectedWeeks(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']);
   };
 
+  const handleSelectAllWeeks = () => {
+    setSelectedWeeks(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']);
+  };
+
+  const handleClearWeeks = () => {
+    setSelectedWeeks([]);
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
@@ -83,7 +90,25 @@ export function StrategyDialog({ goalId, open, onOpenChange, strategy }: Strateg
             />
           </div>
           <div className="space-y-2">
-            <Label>Which weeks will you perform this action?</Label>
+            <div className="flex justify-between items-center">
+              <Label>Which weeks will you perform this action?</Label>
+              <div className="space-x-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={handleSelectAllWeeks}
+                >
+                  Select All
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={handleClearWeeks}
+                >
+                  Clear All
+                </Button>
+              </div>
+            </div>
             <div className="border rounded-lg p-4">
               <ToggleGroup 
                 type="multiple" 
