@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,7 +15,6 @@ export function WeeklyProgress() {
   const totalWeeks = 12;
   const currentWeekNumber = getCurrentWeek(currentPlan);
   
-  // Limit selectable weeks to current and past weeks
   const selectableWeeks = Math.min(currentWeekNumber, totalWeeks);
   
   const [activeWeek, setActiveWeek] = useState(selectableWeeks);
@@ -85,21 +83,28 @@ export function WeeklyProgress() {
                               <p className="text-sm">{strategy.content}</p>
                               <p className="text-xs text-muted-foreground mt-1">
                                 Target: {strategy.frequency}x this week
+                                {!strategy.weeks.includes(activeWeek) && (
+                                  <span className="text-yellow-500 ml-2">(Not scheduled this week)</span>
+                                )}
                               </p>
                             </div>
                             <div className="flex gap-1">
-                              {/* This is just a placeholder for strategy frequency checkboxes
-                                  In a real implementation, we would map over strategy.frequencies */}
-                              {Array.from({ length: strategy.frequency }).map((_, i) => (
-                                <Button
-                                  key={i}
-                                  variant="outline"
-                                  size="icon"
-                                  className="h-7 w-7"
-                                >
-                                  <Check className="h-3 w-3" />
-                                </Button>
-                              ))}
+                              {strategy.weeks.includes(activeWeek) ? (
+                                Array.from({ length: strategy.frequency }).map((_, i) => (
+                                  <Button
+                                    key={i}
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-7 w-7"
+                                  >
+                                    <Check className="h-3 w-3" />
+                                  </Button>
+                                ))
+                              ) : (
+                                <span className="text-xs text-muted-foreground italic">
+                                  Scheduled for weeks: {strategy.weeks.join(", ")}
+                                </span>
+                              )}
                             </div>
                           </div>
                         </CardContent>

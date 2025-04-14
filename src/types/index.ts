@@ -27,7 +27,7 @@ export interface Strategy {
   goalId: string;
   planId: string;
   content: string;
-  weeks: string[];
+  weeks: number[];  // Changed from string[] to number[] to store selected week numbers
   status: string;
   frequency: number;
   history?: StrategyHistory[];
