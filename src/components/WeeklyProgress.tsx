@@ -3,9 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { usePlan } from "@/context/PlanContext";
-import { ChevronLeft, ChevronRight, Check, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check, X, Edit } from "lucide-react";
 import { getWeekLabel } from "@/lib/date-utils";
 import { getCurrentWeek } from "@/lib/plan-utils";
+import { StrategyDialog } from "@/components/StrategyDialog";
+import { IndicatorDialog } from "@/components/IndicatorDialog";
+import { Strategy, Indicator } from "@/types";
 
 export function WeeklyProgress() {
   const { currentPlan } = usePlan();
@@ -29,6 +32,21 @@ export function WeeklyProgress() {
   
   const weekLabel = getWeekLabel(activeWeek, currentPlan.startDate);
   
+  const [editingStrategy, setEditingStrategy] = useState<Strategy | undefined>();
+  const [editingIndicator, setEditingIndicator] = useState<Indicator | undefined>();
+  const [isStrategyDialogOpen, setIsStrategyDialogOpen] = useState(false);
+  const [isIndicatorDialogOpen, setIsIndicatorDialogOpen] = useState(false);
+
+  const handleEditStrategy = (strategy: Strategy) => {
+    setEditingStrategy(strategy);
+    setIsStrategyDialogOpen(true);
+  };
+
+  const handleEditIndicator = (indicator: Indicator) => {
+    setEditingIndicator(indicator);
+    setIsIndicatorDialogOpen(true);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -88,22 +106,27 @@ export function WeeklyProgress() {
                                 )}
                               </p>
                             </div>
-                            <div className="flex gap-1">
-                              {strategy.weeks.includes(activeWeek) ? (
-                                Array.from({ length: strategy.frequency }).map((_, i) => (
-                                  <Button
-                                    key={i}
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-7 w-7"
-                                  >
-                                    <Check className="h-3 w-3" />
-                                  </Button>
-                                ))
-                              ) : (
-                                <span className="text-xs text-muted-foreground italic">
-                                  Scheduled for weeks: {strategy.weeks.join(", ")}
-                                </span>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleEditStrategy(strategy)}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              {strategy.weeks.includes(activeWeek) && (
+                                <div className="flex gap-1">
+                                  {Array.from({ length: strategy.frequency }).map((_, i) => (
+                                    <Button
+                                      key={i}
+                                      variant="outline"
+                                      size="icon"
+                                      className="h-7 w-7"
+                                    >
+                                      <Check className="h-3 w-3" />
+                                    </Button>
+                                  ))}
+                                </div>
                               )}
                             </div>
                           </div>
@@ -139,9 +162,18 @@ export function WeeklyProgress() {
                                 Current: {indicator.initialValue} {indicator.metric} → Target: {indicator.goalValue} {indicator.metric}
                               </p>
                             </div>
-                            <Button variant="outline" size="sm">
-                              Update
-                            </Button>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleEditIndicator(indicator)}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button variant="outline" size="sm">
+                                Update
+                              </Button>
+                            </div>
                           </div>
                         </CardContent>
                       </Card>
@@ -155,6 +187,20 @@ export function WeeklyProgress() {
           </TabsContent>
         </Tabs>
       </CardContent>
+
+      <StrategyDialog
+        goalId={editingStrategy?.goalId || ""}
+        open={isStrategyDialogOpen}
+        onOpenChange={setIsStrategyDialogOpen}
+        strategy={editingStrategy}
+      />
+
+      <IndicatorDialog
+        goalId={editingIndicator?.goalId || ""}
+        open={isIndicatorDialogOpen}
+        onOpenChange={setIsIndicatorDialogOpen}
+        indicator={editingIndicator}
+      />
     </Card>
   );
 }
