@@ -17,12 +17,12 @@ export function Layout({ children }: LayoutProps) {
       <header className="sticky top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-white/60">
         <div className="container mx-auto">
           <div className="flex h-20 items-center px-6 md:px-8">
-            <div className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-300 to-indigo-400 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                 QF
               </div>
               <h1 className="text-2xl font-bold gradient-text">QuarterFocus</h1>
-            </div>
+            </Link>
             <div className="ml-auto flex items-center gap-4">
               <Button variant="outline" asChild>
                 <Link to="/login">
