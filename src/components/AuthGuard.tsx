@@ -1,17 +1,16 @@
 
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useSubscription } from "@/context/SubscriptionContext";
+import { useAuth } from "@/context/AuthContext";
 
 interface AuthGuardProps {
   children: React.ReactNode;
 }
 
 export const AuthGuard = ({ children }: AuthGuardProps) => {
-  // TODO: Replace this with actual auth check from Supabase
-  const isAuthenticated = localStorage.getItem("dev_mode") === "true";
+  const { session } = useAuth();
   
-  if (!isAuthenticated) {
+  if (!session) {
     return <Navigate to="/login" replace />;
   }
 
