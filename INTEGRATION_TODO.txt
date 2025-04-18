@@ -1,0 +1,65 @@
+
+# QuarterFocus Integration TODO List
+
+## 1. Supabase Integration
+- Connect project to Supabase via Lovable integration button
+- Set up database tables:
+  * users (extends auth.users)
+  * plans
+  * goals
+  * strategies
+  * indicators
+  * templates
+  * subscribers
+
+## 2. Authentication with Supabase
+- Replace placeholder login/signup
+- Update AuthGuard to use Supabase session
+- Create login/signup pages
+- Add password reset
+- Implement profile management
+
+## 3. Subscription Management with Stripe
+- Create Stripe account and configure products:
+  * Premium ($5/month)
+  * Lifetime ($49 one-time)
+- Set up Edge Functions:
+  * create-checkout
+  * check-subscription
+  * customer-portal
+- Update SubscriptionContext
+- Implement subscription guards
+
+## 4. Data Management
+- Implement CRUD operations
+- Set up RLS policies
+- Create database triggers
+- Implement API endpoints for:
+  * Plans management
+  * Goals CRUD
+  * Strategy/Indicator tracking
+  * Progress reports
+
+## 5. Progress Tracking
+- Implement strategy completion
+- Create history tables
+- Set up progress visualization
+- Implement notifications
+
+## 6. Templates System
+- Seed initial templates
+- Implement template application
+- Create admin interface
+
+## 7. AI Suggestions
+- Set up OpenAI integration
+- Implement suggestion generation
+- Add rate limiting
+
+## 8. Deployment & Final Steps
+- Configure environment variables
+- Set up monitoring
+- Implement logging
+- Create backup procedures
+- Test subscription flow
+- Security audit
