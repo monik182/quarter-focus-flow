@@ -14,6 +14,10 @@ import Templates from "./pages/Templates";
 import Suggestions from "./pages/Suggestions";
 import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
+import Login from '@/pages/Login';
+import Signup from '@/pages/Signup';
+import ResetPassword from '@/pages/ResetPassword';
+import { AuthProvider } from '@/context/AuthContext';
 
 const queryClient = new QueryClient();
 
@@ -27,50 +31,63 @@ const App = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <BrowserRouter>
-          <PlanProvider>
-            <SubscriptionProvider>
-              <Toaster />
-              <Sonner />
-              <Routes>
-                {/* Public routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/pricing" element={<Pricing />} />
-                
-                {/* Protected routes */}
-                <Route
-                  path="/indicators"
-                  element={
-                    <AuthGuard>
-                      <Indicators />
-                    </AuthGuard>
-                  }
-                />
-                <Route
-                  path="/templates"
-                  element={
-                    <AuthGuard>
-                      <Templates />
-                    </AuthGuard>
-                  }
-                />
-                <Route
-                  path="/suggestions"
-                  element={
-                    <AuthGuard>
-                      <Suggestions />
-                    </AuthGuard>
-                  }
-                />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </SubscriptionProvider>
-          </PlanProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <BrowserRouter>
+            <PlanProvider>
+              <SubscriptionProvider>
+                <Toaster />
+                <Sonner />
+                <Routes>
+                  {/* Public routes */}
+                  <Route path="/" element={<Index />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
+
+                  {/* Protected routes */}
+                  <Route
+                    path="/indicators"
+                    element={
+                      <AuthGuard>
+                        <Indicators />
+                      </AuthGuard>
+                    }
+                  />
+                  <Route
+                    path="/templates"
+                    element={
+                      <AuthGuard>
+                        <Templates />
+                      </AuthGuard>
+                    }
+                  />
+                  <Route
+                    path="/suggestions"
+                    element={
+                      <AuthGuard>
+                        <Suggestions />
+                      </AuthGuard>
+                    }
+                  />
+                  <Route
+                    path="/indicators"
+                    element={
+                      <AuthGuard>
+                        <Indicators />
+                      </AuthGuard>
+                    }
+                  />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </SubscriptionProvider>
+            </PlanProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </AuthProvider>
   );
 };
 
