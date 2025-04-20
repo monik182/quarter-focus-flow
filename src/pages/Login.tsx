@@ -26,7 +26,17 @@ export default function Login() {
         </div>
         <Auth
           supabaseClient={supabaseClient}
-          appearance={{ theme: ThemeSupa }}
+          appearance={{
+            theme: ThemeSupa,
+            variables: {
+              default: {
+                colors: {
+                  brand: '#a684f5',
+                  brandAccent: '#a684f5',
+                },
+              },
+            },
+          }}
           providers={['google']}
         />
       </div>
