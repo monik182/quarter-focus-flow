@@ -2,8 +2,9 @@
 import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { LogIn, UserPlus } from "lucide-react";
+import { LogIn, LogOut, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from '@/context/AuthContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const isMobile = useIsMobile();
+  const { session, signOut } = useAuth();
 
   return (
     <div className="min-h-screen soft-gradient flex flex-col">
@@ -23,18 +25,27 @@ export function Layout({ children }: LayoutProps) {
               </div>
               <h1 className="text-2xl font-bold gradient-text">QuarterFocus</h1>
             </Link>
-            <div className="ml-auto flex items-center gap-4">
-              <Button variant="outline" asChild>
-                <Link to="/login">
-                  <LogIn className="mr-2 h-4 w-4" /> Login
-                </Link>
-              </Button>
-              <Button asChild>
-                <Link to="/signup">
-                  <UserPlus className="mr-2 h-4 w-4" /> Sign Up
-                </Link>
-              </Button>
-            </div>
+            {!session && (
+              <div className="ml-auto flex items-center gap-4">
+                <Button variant="outline" asChild>
+                  <Link to="/login">
+                    <LogIn className="mr-2 h-4 w-4" /> Login
+                  </Link>
+                </Button>
+                <Button asChild>
+                  <Link to="/signup">
+                    <UserPlus className="mr-2 h-4 w-4" /> Sign Up
+                  </Link>
+                </Button>
+              </div>
+            )}
+            {!!session && (
+              <div className="ml-auto flex items-center gap-4">
+                <Button variant="outline" onClick={signOut}>
+                  <LogOut className="mr-2 h-4 w-4" /> Logout
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </header>

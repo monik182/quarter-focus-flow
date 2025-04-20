@@ -1,14 +1,13 @@
 
-import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
 
 export default function Signup() {
-  const { signUp } = useAuth();
+  const { signUp, session, supabaseClient } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -34,6 +33,12 @@ export default function Signup() {
     }
   };
 
+  useEffect(() => {
+    if (session) {
+      navigate('/');
+    }
+  }, [session, navigate]);
+
   return (
     <div className="container flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md space-y-8">
@@ -41,24 +46,22 @@ export default function Signup() {
           <h2 className="text-2xl font-bold">Create an account</h2>
           <p className="text-muted-foreground">Start your journey with QuarterFocus</p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" name="email" type="email" required />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" name="password" type="password" required />
-          </div>
-          <Button type="submit" className="w-full">
-            Sign Up
-          </Button>
-          <div className="text-center">
-            <Link to="/login" className="text-sm text-primary hover:underline">
-              Already have an account? Sign in
-            </Link>
-          </div>
-        </form>
+        <Auth
+          supabaseClient={supabaseClient}
+          appearance={{
+            theme: ThemeSupa,
+            variables: {
+              default: {
+                colors: {
+                  brand: '#a684f5',
+                  brandAccent: '#a684f5',
+                },
+              },
+            },
+          }}
+          providers={['google']}
+          view="sign_up"
+        />
       </div>
     </div>
   );
